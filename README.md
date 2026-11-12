@@ -2,19 +2,32 @@
 
 Geração e visualização de fractais clássicos do plano complexo — **Mandelbrot**, **Julia** e **Burning Ship** — com foco na comparação entre diferentes conjuntos e análise de padrões.
 
+## Estrutura
+
+```
+Complex-Fractals/
+├── src/
+│   └── complex_number.py   # classe ComplexNumber
+├── notebooks/
+│   ├── mandelbrot.ipynb
+│   ├── julia.ipynb
+│   └── burning_ship.ipynb
+└── requirements.txt
+```
+
 ## Conteúdo
 
-- **`mandelbrot.ipynb`** — geração do conjunto de Mandelbrot, com:
+- **`notebooks/mandelbrot.ipynb`** — geração do conjunto de Mandelbrot, com:
   - Comparação visual com o **Diagrama de Bifurcação** da Equação Logística.
   - Relações com a **equação logística** e **teoria do caos**.
 
-- **`julia.ipynb`** — geração de famílias de conjuntos de Julia para diferentes valores de **c**:
+- **`notebooks/julia.ipynb`** — geração de famílias de conjuntos de Julia para diferentes valores de **c**:
   - Visualização de como pequenas variações em **c** mudam a geometria.
 
-- **`burning_ship.ipynb`** — implementação do fractal Burning Ship:
+- **`notebooks/burning_ship.ipynb`** — implementação do fractal Burning Ship:
   - Visualização do fractal.
 
-- **`utils.py`** — implementação da classe **`ComplexNumber`**, criada para manipulação de números complexos sem depender do tipo `complex` nativo do Python.  
+- **`src/complex_number.py`** — implementação da classe **`ComplexNumber`**, criada para manipulação de números complexos sem depender do tipo `complex` nativo do Python.  
   Essa classe é utilizada para cálculos nos fractais e fornece métodos para operações aritméticas, funções matemáticas e propriedades úteis.
 
 ### Métodos da classe `ComplexNumber`
