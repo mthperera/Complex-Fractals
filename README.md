@@ -32,31 +32,39 @@ Complex-Fractals/
 
 ### Métodos da classe `ComplexNumber`
 
+Os objetos são **imutáveis**: depois de criados, `x` e `y` não podem ser alterados.
+
 #### Construtor e atributos
-- `__init__(x, y)` — inicializa o número complexo com parte real `x` e parte imaginária `y`, calculando módulo (`mod`) e argumento (`argument`).
+- `ComplexNumber(x, y)` — cria o número `x + yi`. Aceita qualquer número real, inclusive tipos do NumPy (`bool` não é aceito). Os valores são guardados como `float`.
+- `x`, `y` — partes real e imaginária (somente leitura).
+- `mod` — módulo `|z|`.
+- `argument` — argumento principal, no intervalo `(-π, π]`.
 
 #### Operadores aritméticos
-- `__add__` / `__radd__` — soma entre complexos ou entre complexo e número real.
-- `__sub__` / `__rsub__` — subtração entre complexos ou entre complexo e número real.
-- `__mul__` / `__rmul__` — multiplicação entre complexos ou entre complexo e número real.
-- `__truediv__` / `__rtruediv__` — divisão entre complexos ou entre complexo e número real.
-- `__pow__` / `__rpow__` — exponenciação com expoente real ou complexo.
+- `+`, `-`, `*`, `/` — entre complexos ou entre complexo e número real, nos dois sentidos (`z + 1` e `1 + z`).
+- `**` — expoente real ou complexo, nos dois sentidos (`z ** 2` e `2 ** z`).
+  - Expoentes inteiros usam só multiplicações, então `z ** 2` sai exato, sem erro de arredondamento de `cos`/`sin`.
+  - Os demais usam o valor principal `exp(w · ln z)`.
+  - `0 ** w` vale `0` quando `Re(w) > 0` e lança `ZeroDivisionError` quando `Re(w) ≤ 0` (exceto `w = 0`, que dá `1`).
 
-#### Comparações
-- `__eq__` — igualdade entre complexos ou com número real.
-- `__ne__` — diferença entre complexos ou com número real.
+#### Comparações e hash
+- `==` / `!=` — entre complexos ou com número real.
+- `hash(z)` — permite usar em `set` e como chave de `dict`. Quando `y = 0`, o hash é igual ao do número real `x`.
 
 #### Funções matemáticas (estáticas)
-- `exp(complex)` — exponencial de número complexo.
-- `ln(complex)` — logaritmo natural de número complexo.
-- `log(complex, base)` — logaritmo de número complexo em base arbitrária.
+- `exp(z)` — exponencial.
+- `ln(z)` — logaritmo natural principal: `ln|z| + i·arg(z)`.
+- `log(z, base)` — logaritmo principal em base real ou complexa (padrão: `e`).
 
 #### Operadores unários
-- `__pos__` — retorna o próprio número.
-- `__neg__` — retorna o número oposto.
+- `+z` — o próprio número.
+- `-z` — o número oposto.
+- `abs(z)` — o módulo (igual a `mod`).
 
 #### Conversões e utilidades
-- `__bool__` — retorna `False` se o número for `0 + 0i`, caso contrário `True`.
-- `__str__` — representação como string no formato `a + bi`.
-- `__getitem__(index)` — acesso por índice: `0` para parte real, `1` ou `-1` para parte imaginária.
-- `__len__` — retorna `2`, número de componentes do complexo.
+- `bool(z)` — `False` se o número for `0 + 0i`, caso contrário `True`.
+- `str(z)` — formato `a + bi` ou `a - bi`.
+- `repr(z)` — formato `ComplexNumber(a, b)`.
+- `z[i]` — `0` ou `-2` para a parte real, `1` ou `-1` para a parte imaginária. Também permite desempacotar: `x, y = z`.
+- `len(z)` — retorna `2`, número de componentes do complexo.
+- Operações com escalares do NumPy (`np.float64(2) * z`) devolvem `ComplexNumber`.
